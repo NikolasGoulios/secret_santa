@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Secret Santa Room</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Welcome to Your Secret Santa Room 🎅</h1>
+    <ul id="names-list"></ul>
+    <button id="random-name-btn" class="action-btn">Get a Random Name</button>
+    <p id="assigned-name" style="margin-top: 20px; display: none;"></p>
+  </div>
+  <script>
+    const roomId = new URLSearchParams(window.location.search).get('roomId');
+
+    // Fetch the latest names from the backend
+    fetch(`http://localhost:3000/api/room/${roomId}`)
+      .then(response => response.json())
+      .then(data => {
+        const namesList = document.getElementById('names-list');
+        data.names.forEach(name => {
+          const li = document.createElement('li');
+          li.textContent = name;
+          namesList.appendChild(li);
+        });
+      });
+
+    document.getElementById('random-name-btn').addEventListener('click', async () => {
+      // Fetch the latest names list from the backend
+      const response = await fetch(`http://localhost:3000/api/room/${roomId}`);
+      const data = await response.json();
+
+      // Check if there are any names left
+      if (!data.names || data.names.length === 0) {
+        alert('All names have been assigned!');
+        return;
+      }
+
+      // Select a random name
+      const randomIndex = Math.floor(Math.random() * data.names.length);
+      const randomName = data.names[randomIndex];
+
+      // Remove the assigned name from the backend list
+      data.names.splice(randomIndex, 1);
+
+      // Display the assigned name
+      const assignedName = document.getElementById('assigned-name');
+      assignedName.textContent = `You got: ${randomName}`;
+      assignedName.style.display = 'block';
+
+      // Send the updated names back to the backend
+      await fetch(`http://localhost:3000/api/room/${roomId}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ names: data.names }),
+      });
+
+      // Update the local list
+      const namesList = document.getElementById('names-list');
+      namesList.innerHTML = '';
+      data.names.forEach(name => {
+        const li = document.createElement('li');
+        li.textContent = name;
+        namesList.appendChild(li);
+      });
+    });
+  </script>
+</body>
+</html>

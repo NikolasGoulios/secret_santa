@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Secret Santa - Create Room</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Create Your Secret Santa Room 🎅</h1>
+    <textarea id="names-input" placeholder="Enter friends' names, separated by commas"></textarea>
+    <button id="create-room-btn" class="action-btn">Create Room</button>
+    <p id="room-link" style="margin-top: 20px; display: none;">Room link: <a id="link" href=""></a></p>
+  </div>
+  <script>
+    document.getElementById('create-room-btn').addEventListener('click', async () => {
+      const names = document.getElementById('names-input').value.trim();
+      if (!names) {
+        alert('Please enter at least one name!');
+        return;
+      }
+
+      // Send names to the backend to create a room
+      const response = await fetch('http://localhost:3000/create-room', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ names: names.split(',').map(name => name.trim()) })
+      });
+
+      const data = await response.json();
+
+      // Display the room link
+      const roomLink = document.getElementById('room-link');
+      const link = document.getElementById('link');
+      link.href = `http://localhost:3000/room/${data.roomId}`;
+      link.textContent = `http://localhost:3000/room/${data.roomId}`;
+      roomLink.style.display = 'block';
+    });
+  </script>
+</body>
+</html>
