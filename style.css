@@ -1,3 +1,54 @@
-body { font-family: Arial, sans-serif; text-align: center; padding: 20px; }
-#assigned-name { margin: 20px; font-size: 20px; font-weight: bold; display: none; }
-button { padding: 10px 20px; font-size: 16px; }
+/* Resetting default styles */
+body, html {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	font-family: 'Arial', sans-serif;
+  }
+  
+  /* Background gradient */
+  body {
+	height: 100vh;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	background: linear-gradient(135deg, #f093fb, #f5576c);
+	color: white;
+  }
+  
+  /* Main container styling */
+  .container {
+	text-align: center;
+  }
+  
+  /* Title styling */
+  h1 {
+	font-size: 2.5rem;
+	margin-bottom: 20px;
+  }
+  
+  /* Button styling */
+  .action-btn {
+	background: white;
+	border: none;
+	border-radius: 50px;
+	padding: 15px 40px;
+	font-size: 1rem;
+	font-weight: bold;
+	color: black;
+	cursor: pointer;
+	box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+	transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .action-btn:hover {
+	transform: scale(1.05);
+	box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.3);
+  }
+  
+  /* Text below button */
+  p {
+	font-size: 1rem;
+	margin-top: 10px;
+	opacity: 0.8;
+  }

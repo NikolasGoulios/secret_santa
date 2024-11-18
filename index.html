@@ -3,52 +3,15 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Secret Santa</title>
+  <title>Secret Santa Private Room</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <h1>Secret Santa 🎅</h1>
-  <div>
-    <label for="name-input">Enter names (comma-separated):</label>
-    <input type="text" id="name-input" placeholder="e.g., Alice, Bob, Charlie">
-    <button id="start-btn">Start</button>
+  <div class="container">
+    <h1>Secret Santa Private Room</h1>
+    <button class="action-btn">Click Me</button>
+    <p>Click the button above</p>
   </div>
-
-  <div>
-    <button id="assign-btn" style="display:none;">Assign Name</button>
-    <p id="assigned-name"></p>
-  </div>
-
-  <script>
-    let names = [];
-    const nameInput = document.getElementById('name-input');
-    const startBtn = document.getElementById('start-btn');
-    const assignBtn = document.getElementById('assign-btn');
-    const assignedName = document.getElementById('assigned-name');
-
-    startBtn.addEventListener('click', () => {
-      const input = nameInput.value.trim();
-      if (input) {
-        names = input.split(',').map(name => name.trim());
-        alert('Names added! Click "Assign Name" to get started.');
-        assignBtn.style.display = 'inline-block';
-      } else {
-        alert('Please enter at least one name!');
-      }
-    });
-
-    assignBtn.addEventListener('click', () => {
-      if (names.length === 0) {
-        alert('All names have been assigned!');
-        assignBtn.style.display = 'none';
-        return;
-      }
-      const randomIndex = Math.floor(Math.random() * names.length);
-      const chosenName = names.splice(randomIndex, 1)[0];
-      assignedName.textContent = `You got: ${chosenName}`;
-      assignedName.style.display = 'block';
-    });
-</script>
-<script src="script.js"></script> 
+  <script src="script.js"></script>
 </body>
 </html>
